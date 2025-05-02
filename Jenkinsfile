@@ -3,7 +3,12 @@ pipeline {
     stages {
         stage('Build All Modules') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                sh 'mvn clean install'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test -Dmaven.test.failure.ignore=true'
             }
         }
         stage('PMD') {
@@ -18,7 +23,7 @@ pipeline {
         }
         stage('Javadoc') {
             steps {
-                sh 'mvn javadoc:javadoc -Dmaven.javadoc.skip=true'
+                sh 'mvn javadoc:javadoc'
             }
         }
         stage('Site') {
@@ -26,13 +31,18 @@ pipeline {
                 sh 'mvn site'
             }
         }
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: '**/target/site/**/*.*', fingerprint: true
-            archiveArtifacts artifacts: '**/target/**/*.jar',      fingerprint: true
-            archiveArtifacts artifacts: '**/target/**/*.war',      fingerprint: true
-            junit '**/target/surefire-reports/*.xml'
+        stage('Package') {
+            steps {
+                sh 'mvn package -DskipTests'
+            }
         }
     }
+     post {
+        always {
+            archiveArtifacts artifacts: '**/target/site/**/*.*', fingerprint: true
+            archiveArtifacts artifacts: '**/target/**/*.jar', fingerprint: true
+            archiveArtifacts artifacts: '**/target/**/*.war', fingerprint: true
+            junit '**/target/surefire-reports/*.xml'
+        }
+     }
 }
