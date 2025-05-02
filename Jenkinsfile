@@ -1,9 +1,17 @@
 pipeline {
     agent any
+    tools {
+        jdk 'JDK11'
+        maven 'Maven3'
+    }
+    environment {
+        JAVA_HOME = tool 'JDK11'
+        PATH      = "${env.JAVA_HOME}/bin:${tool 'Maven3'}/bin:${env.PATH}"
+    }
     stages {
-        stage('Build All Modules') {
+        stage('Build & Install') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean install -DskipTests'
             }
         }
         stage('Test') {
@@ -28,18 +36,13 @@ pipeline {
         }
         stage('Site') {
             steps {
-                sh 'mvn site'
-            }
-        }
-        stage('Package') {
-            steps {
-                sh 'mvn package -DskipTests'
+                sh 'mvn site site:stage -DskipTests'
             }
         }
     }
      post {
         always {
-            archiveArtifacts artifacts: '**/target/site/**/*.*', fingerprint: true
+            archiveArtifacts artifacts: '**/target/staging/**/*.*', fingerprint: true
             archiveArtifacts artifacts: '**/target/**/*.jar', fingerprint: true
             archiveArtifacts artifacts: '**/target/**/*.war', fingerprint: true
             junit '**/target/surefire-reports/*.xml'
