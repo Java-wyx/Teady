@@ -18,7 +18,7 @@ pipeline {
         }
         stage('PMD') {
             steps {
-                sh 'mvn pmd:pmd'
+                sh 'mvn pmd:cpd pmd:pmd'
             }
         }
         stage('JaCoCo') {
