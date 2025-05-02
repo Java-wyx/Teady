@@ -1,13 +1,5 @@
 pipeline {
     agent any
-    tools {
-        jdk 'JDK11'
-        maven 'Maven3'
-    }
-    environment {
-        JAVA_HOME = tool 'JDK11'
-        PATH      = "${env.JAVA_HOME}/bin:${tool 'Maven3'}/bin:${env.PATH}"
-    }
     stages {
         stage('Build & Install') {
             steps {
