@@ -3,7 +3,7 @@
 /**
  * Navigation controller.
  */
-angular.module('docs').controller('Navigation', function($scope, $state, $stateParams, $rootScope, User) {
+angular.module('docs').controller('Navigation', function($scope, $state, $stateParams, $rootScope, User, $uibModal) {
   User.userInfo().then(function(data) {
     $rootScope.userInfo = data;
     if (data.anonymous) {
@@ -29,5 +29,12 @@ angular.module('docs').controller('Navigation', function($scope, $state, $stateP
       $state.go('main');
     });
     $event.preventDefault();
+  };
+
+  $scope.openRequestModal = function() {
+    $uibModal.open({
+      templateUrl: 'partial/docs/user.request.modal.html',
+      controller: 'ModalUserRequest'
+    });
   };
 });
