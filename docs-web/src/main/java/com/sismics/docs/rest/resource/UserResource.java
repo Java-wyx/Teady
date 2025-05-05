@@ -81,10 +81,10 @@ public class UserResource extends BaseResource {
         @FormParam("password") String password,
         @FormParam("email") String email,
         @FormParam("storage_quota") String storageQuotaStr) {
-        if (!authenticate()) {
-            throw new ForbiddenClientException();
-        }
-        checkBaseFunction(BaseFunction.ADMIN); // 只有管理员可以进行新用户的注册
+//        if (!authenticate()) {
+//            throw new ForbiddenClientException();
+//        }
+        // checkBaseFunction(BaseFunction.ADMIN); // 只有管理员可以进行新用户的注册
         
         // Validate the input data
         username = ValidationUtil.validateLength(username, "username", 3, 50);

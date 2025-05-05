@@ -146,7 +146,7 @@
             <a href="#/user"><span class="fas fa-user"></span> {{ 'index.nav_users_groups' | translate }}</a>
           </li>
           <li ng-if="userInfo.username === 'guest'">
-            <button class="btn btn-primary navbar-btn" ng-click="openRequestModal()" style="margin-left: 10px;">发送申请</button>
+            <button class="btn btn-primary navbar-btn" ng-click="openRequestModal()" style="margin-left: 10px;">{{ 'index.nav_register_new_user' | translate }}</button>
           </li>
         </ul>
 
