@@ -38,6 +38,7 @@
     "nav_settings": "设置",
     "logout": "退出",
     "nav_register_new_user": "注册成为新用户",
+    "nav_registration_requests": "新用户申请",
     "global_quota_warning": "<strong>提醒!</strong> 全球配额存储空间已经使用 {{ current | number: 0 }}MB 占总存储配额 {{ total | number: 0 }}MB 的 ({{ percent | number: 1 }}%)"
   },
   "document": {
@@ -255,6 +256,13 @@
       "username": "用户名",
       "create_date": "创建日期",
       "totp_enabled": "为该帐号启用双身份认证",
+      "registration_requests.load_error": "注册申请加载失败",
+      "registration_requests.approve_confirm_title": "批准注册申请",
+      "registration_requests.approve_confirm_message": "确定要批准这个注册申请吗？",
+      "settings.user.registration_requests.approve_error": "申请批准失败",
+      "registration_requests.reject_confirm_title": "拒绝注册申请",
+      "registration_requests.reject_confirm_message": "确定要拒绝这个注册申请吗？",
+      "settings.user.registration_requests.reject_error": "申请拒绝失败",
       "edit": {
         "delete_user_title": "删除用户",
         "delete_user_message": "您是否确认删除该用户? 所有相关文档，文件和标签将被删除",
@@ -272,7 +280,15 @@
         "disabled": "禁用用户",
         "password_reset_btn": "给该用户发送密码重置电子邮件",
         "password_lost_sent_title": "密码重置邮件已发送",
-        "password_lost_sent_message": "密码重置电子邮件已发送至 <strong>{{ username }}</strong>"
+        "password_lost_sent_message": "密码重置电子邮件已发送至 <strong>{{ username }}</strong>",
+        "approve": "同意",
+        "reject": "拒绝",
+        "empty": "没有待处理的注册申请",
+        "title": "注册审批",
+        "register_request_sent_title":   "注册申请已发送",
+        "register_request_sent_message": "您的注册申请已提交，管理员审核后即可使用。",
+        "create_date": "申请日期",
+        "actions": "审批行为"
       }
     },
     "workflow": {

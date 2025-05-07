@@ -5,18 +5,27 @@ angular.module('docs').controller('ModalUserRequest', function($scope, $dialog, 
   $scope.user = {};
 
   $scope.submitRequest = function () {
-    var promise = null;
     var user = angular.copy($scope.user);
     user.storage_quota = 100000;
     user.storage_quota *= 1000000;
 
-    promise = Restangular
+    // Prepare data as x-www-form-urlencoded
+    var data = 'username=' + user.username +
+        '&password=' + user.password +
+        '&email=' + user.email +
+        '&storage_quota=' + user.storage_quota;
+
+    var promise = Restangular
         .one('user')
-        .put(user);
+        .one('register_request')
+        .customPUT(data, '', {}, { 'Content-Type': 'application/x-www-form-urlencoded' });
 
     promise.then(function () {
-      $scope.loadUsers();
-      $state.go('settings.user');
+      var title = $translate.instant('settings.user.edit.register_request_sent_title');
+      var msg = $translate.instant('settings.user.edit.register_request_sent_message');
+      var btns = [{result: 'ok', label: $translate.instant('ok'), cssClass: 'btn-primary'}];
+      $dialog.messageBox(title, msg, btns);
+      $scope.cancel();
     }, function (e) {
       if (e.data.type === 'AlreadyExistingUsername') {
         var title = $translate.instant('settings.user.edit.edit_user_failed_title');
@@ -26,6 +35,7 @@ angular.module('docs').controller('ModalUserRequest', function($scope, $dialog, 
       }
     });
   };
+
 
   $scope.cancel = function() {
     $uibModalInstance.dismiss('cancel');

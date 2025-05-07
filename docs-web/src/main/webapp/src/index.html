@@ -61,6 +61,7 @@
     <script src="app/docs/controller/Navigation.js" type="text/javascript"></script>
     <script src="app/docs/controller/Footer.js" type="text/javascript"></script>
     <script src="app/docs/controller/ModalUserRequest.js" type="text/javascript"></script>
+    <script src="app/docs/controller/UserRegistrationRequests.js" type="text/javascript"></script>
     <script src="app/docs/controller/document/Document.js" type="text/javascript"></script>
     <script src="app/docs/controller/document/DocumentDefault.js" type="text/javascript"></script>
     <script src="app/docs/controller/document/DocumentEdit.js" type="text/javascript"></script>
@@ -147,6 +148,12 @@
           </li>
           <li ng-if="userInfo.username === 'guest'">
             <button class="btn btn-primary navbar-btn" ng-click="openRequestModal()" style="margin-left: 10px;">{{ 'index.nav_register_new_user' | translate }}</button>
+          </li>
+          <li ui-sref-active="{ active: 'requests' }" ng-if="userInfo.username==='admin'">
+            <a href="#/user/registration/requests">
+              <span class="fas fa-user-plus"></span>
+              {{ 'index.nav_registration_requests' | translate }}
+            </a>
           </li>
         </ul>
 

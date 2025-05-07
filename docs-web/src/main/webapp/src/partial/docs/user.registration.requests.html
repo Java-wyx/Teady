@@ -1,0 +1,42 @@
+<div class="page-header">
+  <h1>
+    <i class="fas fa-user-edit"></i>
+    <span translate="settings.user.edit.title"></span>
+  </h1>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12 well">
+    <table class="table" ng-show="requests.length">
+      <thead>
+      <tr>
+        <th translate="settings.user.edit.username"></th>
+        <th translate="settings.user.edit.email"></th>
+        <th translate="settings.user.edit.create_date"></th>
+        <th translate="settings.user.edit.actions"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="request in requests">
+        <td>{{ request.username }}</td>
+        <td>{{ request.email }}</td>
+        <td>{{ request.create_date | date:'medium' }}</td>
+        <td>
+          <button class="btn btn-success btn-sm" ng-click="approveRequest(request.id)">
+            <span class="fas fa-check"></span>
+            {{ 'settings.user.edit.approve' | translate }}
+          </button>
+          <button class="btn btn-danger btn-sm" ng-click="rejectRequest(request.id)">
+            <span class="fas fa-times"></span>
+            {{ 'settings.user.edit.reject' | translate }}
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div ng-if="!requests.length" class="alert alert-info text-center">
+      {{ 'settings.user.edit.empty' | translate }}
+    </div>
+  </div>
+</div>

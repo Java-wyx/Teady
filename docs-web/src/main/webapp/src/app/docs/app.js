@@ -37,6 +37,15 @@ angular.module('docs',
         }
       }
     })
+    .state('requests', {
+      url: '/user/registration/requests',
+      views: {
+        'page': {
+          templateUrl: 'partial/docs/user.registration.requests.html',
+          controller: 'UserRegistrationRequests'
+        }
+      }
+    })
     .state('tag', {
       url: '/tag',
       abstract: true,
