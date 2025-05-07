@@ -15,7 +15,7 @@
                 checkout scmGit( 
                     branches: [[name: '*/master']],
                     extensions: [],  
-                    userRemoteConfigs: [[url: 'https://github.com/Java-wyx/Teady.git'], credentialsId: '66deff23-9ee2-431b-a67d-856dac706302'] // your github Repository
+                    userRemoteConfigs: [[url: 'https://github.com/Java-wyx/Teady.git', credentialsId: '66deff23-9ee2-431b-a67d-856dac706302']] // your github Repository
                 ) 
                 sh 'mvn -B -DskipTests clean package'
             } 
