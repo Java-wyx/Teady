@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h3 class="modal-title">翻译文件</h3>
+</div>
+<div class="modal-body">
+  <label>目标语言：</label>
+  <select ng-model="targetLanguage" class="form-control" ng-options="lang.code as lang.name for lang in acceptedLanguages"></select>
+  <div ng-if="isTranslating" class="text-center" style="margin: 10px;">
+    <span class="fa fa-spinner fa-spin"></span> 正在翻译...
+  </div>
+  <div ng-if="translatedContent" style="margin-top: 15px;">
+    <label>译文：</label>
+    <pre style="white-space: pre-wrap;">{{ translatedContent }}</pre>
+  </div>
+  <div ng-if="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="translate()" ng-disabled="isTranslating">翻译</button>
+  <button class="btn btn-default" ng-click="close()">关闭</button>
+</div>
+
+

@@ -26,12 +26,11 @@ import com.sismics.util.context.ThreadLocalContext;
 import com.sismics.util.log4j.LogCriteria;
 import com.sismics.util.log4j.LogEntry;
 import com.sismics.util.log4j.MemoryAppender;
-import jakarta.json.Json;
-import jakarta.json.JsonArrayBuilder;
-import jakarta.json.JsonObjectBuilder;
+import jakarta.json.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Appender;
@@ -884,5 +883,52 @@ public class AppResource extends BaseResource {
         }
 
         return Response.ok().build();
+    }
+
+    /**
+     * 更新翻译服务配置（表单方式接收 api_key）
+     *
+     * @api {post} /app/config_translate 更新翻译服务配置
+     */
+    @POST
+    @Path("config_translate")
+    public Response configTranslate(@FormParam("api_key") String apiKey) {
+        if (!authenticate()) {
+            throw new ForbiddenClientException();
+        }
+        checkBaseFunction(BaseFunction.ADMIN);
+
+        if (apiKey != null && !apiKey.isEmpty()) {
+            new ConfigDao().update(ConfigType.DEEPL_API_KEY, apiKey);
+        }
+
+        return Response.ok().build();
+    }
+
+    /**
+     * 获取翻译服务配置
+     *
+     * @api {get} /app/config_translate 获取翻译服务配置
+     */
+    @GET
+    @Path("config_translate")
+    public Response getConfigTranslate() {
+        if (!authenticate()) {
+            throw new ForbiddenClientException();
+        }
+        checkBaseFunction(BaseFunction.ADMIN);
+
+        ConfigDao configDao = new ConfigDao();
+        Config cfg = configDao.getById(ConfigType.DEEPL_API_KEY);
+
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+
+        if (cfg != null && cfg.getValue() != null) {
+            builder.add("api_key", cfg.getValue());
+        } else {
+            builder.addNull("api_key");
+        }
+        return Response.ok(builder.build()).build();
+
     }
 }

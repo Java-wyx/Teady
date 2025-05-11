@@ -42,6 +42,22 @@
       <artifactId>hibernate-core</artifactId>
     </dependency>
 
+    <!-- DeepL API 依赖 -->
+    <dependency>
+      <groupId>com.deepl.api</groupId>
+      <artifactId>deepl-java</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+    </dependency>
+
     <!-- Other external dependencies -->
     <dependency>
       <groupId>joda-time</groupId>
@@ -218,6 +234,7 @@
       <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
+
   </dependencies>
 
   <profiles>

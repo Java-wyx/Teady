@@ -88,6 +88,14 @@
     "quota": "{{ current | number: 0 }}MB ({{ percent | number: 1 }}%) used on {{ total | number: 0 }}MB",
     "count": "{{ count }} document{{ count > 1 ? 's' : '' }} found",
     "last_updated": "Last updated {{ date | timeAgo: dateFormat }}",
+    "translate": {
+      "title": "Translate Document",
+      "target_language": "Target Language",
+      "translate": "Translate",
+      "translating": "Translating...",
+      "translate_success": "Document translated successfully",
+      "translate_error": "Failed to translate document"
+    },
     "view": {
       "delete_comment_title": "Delete comment",
       "delete_comment_message": "Do you really want to delete this comment?",

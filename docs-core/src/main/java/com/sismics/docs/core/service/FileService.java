@@ -86,6 +86,16 @@ public class FileService extends AbstractScheduledService {
     }
 
     /**
+     * Get a file path by its ID.
+     *
+     * @param fileId File ID
+     * @return File path
+     */
+    public Path getFile(String fileId) {
+        return Paths.get(System.getProperty("java.io.tmpdir"), "sismics_docs", fileId);
+    }
+
+    /**
      * Phantom reference to a temporary file.
      *
      * @author bgamard

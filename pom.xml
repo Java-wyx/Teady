@@ -253,6 +253,26 @@
 
   <dependencyManagement>
     <dependencies>
+
+      <!-- DeepL API 依赖 -->
+      <dependency>
+        <groupId>com.deepl.api</groupId>
+        <artifactId>deepl-java</artifactId>
+        <version>1.4.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5.13</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>20211205</version>
+      </dependency>
+
       <dependency>
         <groupId>com.sismics.docs</groupId>
         <artifactId>docs-core</artifactId>

@@ -15,6 +15,7 @@ import com.sismics.docs.core.event.FileUpdatedAsyncEvent;
 import com.sismics.docs.core.model.context.AppContext;
 import com.sismics.docs.core.model.jpa.File;
 import com.sismics.docs.core.model.jpa.User;
+import com.sismics.docs.core.service.TranslationService;
 import com.sismics.docs.core.util.DirectoryUtil;
 import com.sismics.docs.core.util.EncryptionUtil;
 import com.sismics.docs.core.util.FileUtil;
@@ -39,6 +40,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import jakarta.ws.rs.core.StreamingOutput;
+
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -809,4 +812,54 @@ public class FileResource extends BaseResource {
             }
         }
     }
+    @POST
+    @Path("{id}/translate")
+    public Response translateFile(@PathParam("id") String fileId, @FormParam("targetLanguage") String targetLanguage) {
+        authenticate();
+        // 1. 权限校验
+        FileDao fileDao = new FileDao();
+        File file = fileDao.getFile(fileId);
+        if (file == null) {
+            throw new NotFoundException();
+        }
+        // 获取文件内容
+        String content = file.getContent();
+        if (content == null || content.trim().isEmpty()) {
+            // 如果数据库中没有内容，尝试从物理文件读取
+            try {
+                java.nio.file.Path storedFile = DirectoryUtil.getStorageDirectory().resolve(file.getId());
+                content = Files.readString(storedFile);
+            } catch (Exception e) {
+                throw new ServerException("FileContentError", "无法读取文件内容", e);
+            }
+        }
+        if (content == null || content.trim().isEmpty()) {
+            throw new ServerException("FileContentError", "文件内容为空，无法翻译");
+        }
+        // 获取源语言
+        String sourceLanguage = null;
+        // 如果file没有language，尝试从文档获取
+        String documentId = file.getDocumentId();
+        if (documentId != null) {
+            DocumentDao documentDao = new DocumentDao();
+            DocumentDto documentDto = documentDao.getDocument(documentId, PermType.READ, getTargetIdList(null));
+            if (documentDto != null && documentDto.getLanguage() != null) {
+                sourceLanguage = documentDto.getLanguage();
+            }
+        }
+        if (sourceLanguage == null || sourceLanguage.trim().isEmpty()) {
+            sourceLanguage = "EN"; // 默认英语
+        } else {
+            if (sourceLanguage.length() == 3) {
+                sourceLanguage = sourceLanguage.substring(0, 2);
+            }
+            sourceLanguage = sourceLanguage.toUpperCase();
+        }
+        // 调用翻译服务
+        String translated = TranslationService.getInstance().translate(content, sourceLanguage, targetLanguage);
+        return Response.ok().entity(Json.createObjectBuilder()
+            .add("translatedContent", translated)
+            .build()).build();
+    }
+    
 }

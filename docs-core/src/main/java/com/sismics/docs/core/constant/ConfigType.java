@@ -65,5 +65,24 @@ public enum ConfigType {
     LDAP_BASE_DN,
     LDAP_FILTER,
     LDAP_DEFAULT_EMAIL,
-    LDAP_DEFAULT_STORAGE
+    LDAP_DEFAULT_STORAGE,
+    
+    /**
+     * DeepL API key.
+     */
+    DEEPL_API_KEY("deepl.api.key");
+
+    private final String id;
+
+    ConfigType(String id) {
+        this.id = id;
+    }
+
+    ConfigType() {
+        this.id = null;
+    }
+
+    public String getId() {
+        return id;
+    }
 }

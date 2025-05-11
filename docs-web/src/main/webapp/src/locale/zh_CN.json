@@ -80,6 +80,18 @@
     "upgrade_quota": "如需要升级您的限额, 请联系管理员",
     "quota": "{{ current | number: 0 }}MB ({{ current | number: 1 }}%) 已使用 {{ total | number: 0 }}MB",
     "count": "找到{{ count }}个文件",
+    "translate": {
+      "title": "翻译文档",
+      "target_language": "目标语言",
+      "select_language": "请选择目标语言",
+      "translate": "翻译",
+      "translating": "正在翻译...",
+      "translate_success": "文档翻译成功",
+      "translate_error": "文档翻译失败",
+      "error": {
+        "select_language": "请选择目标语言"
+      }
+    },
     "view": {
       "delete_comment_title": "删除评论",
       "delete_comment_message": "您是否确认删除此评论?",
