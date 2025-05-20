@@ -11,7 +11,7 @@ pipeline {
                 sh '''
                     if ! minikube status | grep -q "Running"; then
                         echo "Starting Minikube..."
-                        minikube start
+                        minikube start --registry-mirror=https://registry.docker-cn.com
                     else
                         echo "Minikube already running."
                     fi
