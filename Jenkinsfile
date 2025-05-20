@@ -24,7 +24,6 @@ pipeline {
                 sh '''
                     kubectl create deployment ${DEPLOYMENT_NAME} --image=${IMAGE_NAME}
                     echo "Setting image for deployment..."
-                    kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=${IMAGE_NAME}
                 '''
             }
         }
