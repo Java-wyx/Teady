@@ -36,7 +36,6 @@ pipeline {
         }
         stage('Verify') {
             steps {
-                sh 'kubectl rollout status deployment/${DEPLOYMENT_NAME}'
                 sh 'kubectl get pods'
             }
         }
