@@ -22,8 +22,9 @@ pipeline {
         stage('Set Image') {
             steps {
                 sh '''
-                    kubectl create deployment ${DEPLOYMENT_NAME} --image=${IMAGE_NAME}
+                    kubectl create deployment ${DEPLOYMENT_NAME} --image=wenyunxiang/teedy:23
                     echo "Setting image for deployment..."
+                    kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=${IMAGE_NAME}
                 '''
             }
         }
