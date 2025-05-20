@@ -22,17 +22,21 @@ pipeline {
         }
         stage('Set Image') {
             steps {
-                sh """
-                    eval \$(minikube docker-env)
-                    echo "Setting image for deployment..."
-                    kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=${IMAGE_NAME}
-                """
+                sshagent(credentials: ['minikube-ssh-credential']) {
+                    sh """
+                        eval \$(minikube docker-env)
+                        echo "Setting image for deployment..."
+                        kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=${IMAGE_NAME}
+                    """
+                }
             }
         }
         stage('Verify') {
             steps {
-                sh "kubectl rollout status deployment/${DEPLOYMENT_NAME}"
-                sh "kubectl get pods"
+                sshagent(credentials: ['minikube-ssh-credential']) {
+                    sh "kubectl rollout status deployment/${DEPLOYMENT_NAME}"
+                    sh "kubectl get pods"
+                }
             }
         }
     }
