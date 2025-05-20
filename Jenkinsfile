@@ -21,7 +21,7 @@ pipeline {
         stage('Set Image') {
             steps {
                 sh """
-                    eval $(minikube docker-env)
+                    eval \$(minikube docker-env)
                     echo "Setting image for deployment..."
                     kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=${IMAGE_NAME}
                 """
