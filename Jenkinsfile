@@ -8,14 +8,16 @@ pipeline {
     stages {
         stage('Start Minikube') {
             steps {
-                sh '''
-                    if ! minikube status | grep -q "Running"; then
-                        echo "Starting Minikube..."
-                        minikube start --registry-mirror=https://registry.docker-cn.com
-                    else
-                        echo "Minikube already running."
-                    fi
-                '''
+                sshagent(credentials: ['minikube-ssh-credential'])
+                    sh '''
+                        if ! minikube status | grep -q "Running"; then
+                            echo "Starting Minikube..."
+                            minikube start --registry-mirror=https://registry.docker-cn.com
+                        else
+                            echo "Minikube already running."
+                        fi
+                    '''
+                }
             }
         }
         stage('Set Image') {
