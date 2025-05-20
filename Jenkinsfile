@@ -3,7 +3,7 @@ pipeline {
     environment {
         DEPLOYMENT_NAME = "hello-node"
         CONTAINER_NAME = "teedy"
-        IMAGE_NAME = "wenyunxiang/teedy/:latest"
+        IMAGE_NAME = "wenyunxiang/teedy:latest"
     }
     stages {
         stage('Start Minikube') {
@@ -21,6 +21,7 @@ pipeline {
         stage('Set Image') {
             steps {
                 sh """
+                    eval $(minikube docker-env)
                     echo "Setting image for deployment..."
                     kubectl set image deployment/${DEPLOYMENT_NAME} ${CONTAINER_NAME}=${IMAGE_NAME}
                 """
