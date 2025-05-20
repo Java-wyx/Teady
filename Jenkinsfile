@@ -9,9 +9,10 @@ pipeline {
         stage('Start Minikube') {
             steps {
                 sh '''
+                    minikube delete --all --purge
                     if ! minikube status | grep -q "Running"; then
                         echo "Starting Minikube..."
-                        minikube start
+                        minikube start --driver=docker --native-ssh=false --registry-mirror=https://registry.docker-cn.com || true
                     else
                         echo "Minikube already running."
                     fi
