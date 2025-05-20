@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Start Minikube') {
             steps {
-                sshagent(credentials: ['minikube-ssh-credential'])
+                sshagent(credentials: ['minikube-ssh-credential']) {
                     sh '''
                         if ! minikube status | grep -q "Running"; then
                             echo "Starting Minikube..."
